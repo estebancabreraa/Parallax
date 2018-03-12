@@ -1,0 +1,64 @@
+#Giro
+giro = 0
+#Pasos
+pasos = 0
+#Dirección
+dir = "salida"
+#contador
+a = 0
+
+#Método para girar hacia 
+#la derecha
+def girar_derecha():
+    turn_left()
+    turn_left()
+    turn_left()
+
+#Método para decidir si
+#moverse o no. Sí decide 
+#moverse hacia adelante 
+#regresa un 1, de lo
+#contrario un 0.
+def movef():
+    mover = 0
+    if (front_is_clear()):
+        move()
+        mover = 1
+    return mover
+
+
+#mover hacia el frente
+while(movef() and not on_beeper() ):
+        a = 0
+
+#Para saber si se ha salido
+#exitosamenta del laberinto
+#se colocara un beeper al 
+#final de este. Si llega a 
+#encontrarlo, deja de moverse
+while (not on_beeper()):
+    giro = giro % 4
+    if ((dir == "salida") and ((giro% 4) == 0)):
+        while (movef() and not on_beeper()):
+            a = 0
+        if (right_is_clear() and not on_beeper()):
+            girar_derecha()
+            move()
+        elif (left_is_clear() and not on_beeper()):
+            girar_derecha()
+            move()
+        else:
+            if not on_beeper():
+                girar_derecha()
+                girar_derecha()
+                move()
+    elif (left_is_clear() and not on_beeper()):
+        turn_left()
+        move()
+    elif (movef() and not on_beeper()):
+        a = 0
+    else:
+        if not on_beeper():
+            girar_derecha()
+            movef()
+turn_off()
