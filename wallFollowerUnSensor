@@ -1,0 +1,26 @@
+/*
+  Algoritmo wall follower para salir de laverintos simples
+*/
+
+#include "simpletools.h"                      // incluir simpletools para controladores de la placa
+#include "abdrive.h"                          // Inckuir abdrive para encoders y servos
+#include "ping.h"                             // Incluir ping para sensor
+
+
+int inmaze = 1;
+int wallFollower(){
+  while(inmaze == 1){
+    drive_speed(26, -25);   // Gira a la derecha
+        pause(450);
+    if(ping_cm(8) < 5){       // Si el frente no esta libre
+      drive_speed(-25,26);    // regresa a posicion inicial
+          pause(450);     
+    }
+    if(ping_cm(8) > 5){       //Si el frente esta libre
+      drive_goto(64,64)       //Avanza
+    }
+    else{                     // Si no puede avanzar
+      drive_speed(-25,26);    // Gira a la izquierda
+          pause(450);
+    }
+} 
